@@ -34,17 +34,15 @@ export function modifyNode(node: any, kw: string, desc: string) {
   // 数量不同则需要修改
   if (kwNodes.length !== kwNum) {
     const childNodes = node.childNodes;
-    [...childNodes].forEach((cn, pos) => {
+    [...childNodes].forEach((cn) => {
       const { nodeType, nodeValue } = cn;
-      if (nodeType === 1) {
-        if (ignoreTag(node.tagName)) return;
+      if (nodeType === 1 && !ignoreTag(node.tagName)) {
         modifyNode(cn, kw, desc);
       } else if (nodeType === 3) {
+        const parentNodeTag = cn.parentNode.tagName.toLocaleLowerCase();
         const val = nodeValue.replace(/\r|\n|\s/g, '');
-        if (
-          cn.parentNode.tagName.toLocaleLowerCase() !== 'mm' &&
-          val.includes(kw)
-        ) {
+
+        if (parentNodeTag !== 'mm' && val.includes(kw)) {
           const splits: string[] = nodeValue.split(kw);
           const newNodes: ChildNode[] = [];
 
@@ -57,14 +55,13 @@ export function modifyNode(node: any, kw: string, desc: string) {
               mmNode.setAttribute('data-description', desc);
               mmNode.textContent = kw;
 
-              newNodes.push(textNode, mmNode);
+              newNodes.push(mmNode, textNode);
             }
           });
 
-          if (newNodes.length) {
-            newNodes.forEach((dom) =>
-              node.insertBefore(dom, childNodes[pos + 1])
-            );
+          while (newNodes.length) {
+            const el = newNodes.pop();
+            node.insertBefore(el, cn.nextSibling);
           }
         }
       }

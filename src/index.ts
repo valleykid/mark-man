@@ -8,7 +8,7 @@ class MarkMan {
 
   constructor(config?: MarkManConfig) {
     this.keywords = config ? getKeywords(config.keywords) : [];
-    this.getDesc = (kw: string) => `这是在解释 "${kw}"`;
+    this.getDesc = (kw: string) => `这是在解释 ${kw}`;
   }
 
   init(config?: MarkManConfig) {
@@ -41,7 +41,10 @@ class MarkMan {
         }
       });
     });
-    this.watcher.observe(document.body, { childList: true, subtree: true });
+    this.watcher.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
   }
 }
 
