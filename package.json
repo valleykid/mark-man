@@ -1,0 +1,38 @@
+{
+  "name": "mark-man",
+  "version": "0.0.1",
+  "description": "Insert marks when page loaded or dom changed",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "rollup -c -w --watch.include src/**/*",
+    "build": "rimraf lib && rollup -c",
+    "test": "npm test",
+    "pub": "npm run build && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valleykid/mark-man.git"
+  },
+  "keywords": [
+    "mark"
+  ],
+  "bugs": {
+    "url": "https://github.com/valleykid/mark-man/issues"
+  },
+  "homepage": "https://github.com/valleykid/mark-man#readme",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "rollup": "^2.45.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-uglify": "^6.0.4",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "author": "vk <valleykiddy@gmail.com>",
+  "license": "MIT"
+}
