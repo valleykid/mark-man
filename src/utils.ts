@@ -26,7 +26,7 @@ function getKwNumberByText(kws: Keywords, text?: string) {
   return kwNumberMap;
 }
 
-export function modifyNode(node: any, kw: string) {
+export function modifyNode(node: any, kw: string, desc: string) {
   const text = node.innerText;
   const kwNum = getKwNumberByText(kw, text);
   const kwNodes = node.querySelectorAll(`mm[data-keyword="${kw}"]`);
@@ -38,7 +38,7 @@ export function modifyNode(node: any, kw: string) {
       const { nodeType, nodeValue } = cn;
       if (nodeType === 1) {
         if (ignoreTag(node.tagName)) return;
-        modifyNode(cn, kw);
+        modifyNode(cn, kw, desc);
       } else if (nodeType === 3) {
         const val = nodeValue.replace(/\r|\n|\s/g, '');
         if (
@@ -54,7 +54,7 @@ export function modifyNode(node: any, kw: string) {
               const textNode = document.createTextNode(s);
               const mmNode = document.createElement('mm');
               mmNode.setAttribute('data-keyword', kw);
-              mmNode.setAttribute('title', `这是在解释${kw}`);
+              mmNode.setAttribute('data-description', desc);
               mmNode.textContent = kw;
 
               newNodes.push(textNode, mmNode);
