@@ -1,5 +1,5 @@
 import { MarkManConfig, GetDescription } from './types';
-import { ignoreTag, getKeywords, modifyNode } from './utils';
+import { isIgnoredTag, getRealConfig, modifyNode } from './utils';
 
 class MarkMan {
   private keywords: string[];
@@ -7,18 +7,20 @@ class MarkMan {
   private getDesc: GetDescription;
 
   constructor(config?: MarkManConfig) {
-    this.keywords = config ? getKeywords(config.keywords) : [];
-    this.getDesc = (kw: string) => `这是在解释 ${kw}`;
+    const { keywords, getDesc } = getRealConfig(config);
+    this.keywords = keywords;
+    this.getDesc = getDesc;
   }
 
   init(config?: MarkManConfig) {
     if (config) {
-      const { keywords, getDescription } = config;
-      const newKeywords = getKeywords(keywords);
-      newKeywords.forEach(
-        (kw) => !this.keywords.includes(kw) && this.keywords.push(kw)
-      );
-      if (getDescription) this.getDesc = getDescription;
+      const { keywords: newKeywords, getDesc } = getRealConfig(config);
+      newKeywords.forEach((kw) => {
+        if (!this.keywords.includes(kw)) {
+          this.keywords.push(kw);
+        }
+      });
+      if (getDesc) this.getDesc = getDesc;
     }
 
     // dom 加载完成
@@ -33,7 +35,7 @@ class MarkMan {
     this.watcher = new MutationObserver((list: MutationRecord[]) => {
       list.forEach((item) => {
         const node = item.target as any;
-        if (!ignoreTag(node.tagName)) {
+        if (!isIgnoredTag(node.tagName)) {
           this.keywords.forEach((kw) => {
             const desc = this.getDesc(kw);
             modifyNode(node, kw, desc);
@@ -41,6 +43,7 @@ class MarkMan {
         }
       });
     });
+
     this.watcher.observe(document.body, {
       childList: true,
       subtree: true,

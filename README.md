@@ -11,7 +11,7 @@ npm install mark-man --save # yarn add mark-man
 ## Usage
 
 ```js
-import { markMan, MarkMan } from 'mark-man';
+import MarkMan, { markMan } from 'mark-man';
 
 markMain.init({
   keywords: ['平台', '半导体'], // '平台|半导体'
@@ -27,11 +27,11 @@ markMain.init({
 */
 ```
 
-Browser usage
+**Browser usage**
 
 ```js
 // <script src="https://unpkg.com/mark-man@0.0.1/lib/index.js"></script>
-// 直接引用脚本，使用下面的方式调用插入。因为 window.markMan = { markMan, MarkMan }
+// 直接引用脚本，使用下面的方式调用插入。因为 window.markMan = { markMan, default: MarkMan }
 
 markMan.markMan.init({
   keywords: ['平台', '半导体'],

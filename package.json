@@ -1,6 +1,6 @@
 {
   "name": "mark-man",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Insert marks when page loaded or dom changed",
   "main": "lib/index.js",
   "scripts": {
