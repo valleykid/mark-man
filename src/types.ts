@@ -1,5 +1,5 @@
 export type Keywords = string | string[];
-export type GetDescription = (kw: string) => string;
+export type GetDescription = (word: string) => string;
 
 export interface MarkManConfig {
   keywords: Keywords;

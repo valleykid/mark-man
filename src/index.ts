@@ -15,9 +15,9 @@ class MarkMan {
   init(config?: MarkManConfig) {
     if (config) {
       const { keywords: newKeywords, getDesc } = getRealConfig(config);
-      newKeywords.forEach((kw) => {
-        if (!this.keywords.includes(kw)) {
-          this.keywords.push(kw);
+      newKeywords.forEach((word) => {
+        if (!this.keywords.includes(word)) {
+          this.keywords.push(word);
         }
       });
       if (getDesc) this.getDesc = getDesc;
@@ -25,9 +25,9 @@ class MarkMan {
 
     // dom 加载完成
     document.addEventListener('DOMContentLoaded', () => {
-      this.keywords.forEach((kw) => {
-        const desc = this.getDesc(kw);
-        modifyNode(document.body, kw, desc);
+      this.keywords.forEach((word) => {
+        const desc = this.getDesc(word);
+        modifyNode(document.body, word, desc);
       });
     });
 
@@ -36,9 +36,9 @@ class MarkMan {
       list.forEach((item) => {
         const node = item.target as any;
         if (!isIgnoredTag(node.tagName)) {
-          this.keywords.forEach((kw) => {
-            const desc = this.getDesc(kw);
-            modifyNode(node, kw, desc);
+          this.keywords.forEach((word) => {
+            const desc = this.getDesc(word);
+            modifyNode(node, word, desc);
           });
         }
       });
